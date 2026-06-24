@@ -1,0 +1,6 @@
+{
+  "name": "REDI Campus Delivery",
+  "description": "A food delivery and campus errands platform",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
