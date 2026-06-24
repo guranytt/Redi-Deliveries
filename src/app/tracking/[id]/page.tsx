@@ -1,10 +1,11 @@
+"use client";
 import { useParams } from 'next/navigation';
 import { MainLayout } from '@/components/Layout';
 import { MapPin, Bike, CheckCircle2, ChevronRight, Phone } from 'lucide-react';
 import { cn } from '@/components/Layout';
 
 export default function Tracking() {
-  const { id } = useParams();
+  const params = useParams(); const id = params?.id as string;
   
   const steps = [
     { title: 'Order Confirmed', time: '14:30', active: true },
@@ -22,9 +23,9 @@ export default function Tracking() {
          <div className="absolute inset-0 bg-white/30 backdrop-blur-[2px]"></div>
          
          {/* Simulated Route */}
-         <div className="absolute top-1/2 left-1/4 w-1/2 h-1 bg-orange-600 rounded-full"></div>
+         <div className="absolute top-1/2 left-1/4 w-1/2 h-1 bg-gradient-to-r from-red-600 to-orange-500 rounded-full"></div>
          <div className="absolute top-1/2 left-1/4 -mt-2 -ml-2 bg-gray-900 text-white rounded-full p-1"><MapPin className="w-4 h-4"/></div>
-         <div className="absolute top-1/2 right-1/4 -mt-3 mr-4 bg-orange-600 text-white rounded-full p-2 shadow-lg z-10"><Bike className="w-6 h-6"/></div>
+         <div className="absolute top-1/2 right-1/4 -mt-3 mr-4 bg-gradient-to-r from-red-600 to-orange-500 text-white rounded-full p-2 shadow-lg z-10"><Bike className="w-6 h-6"/></div>
       </div>
 
       <div className="px-6 py-6 pb-32">
@@ -49,15 +50,15 @@ export default function Tracking() {
             {steps.map((step, idx) => (
               <div key={step.title} className="flex flex-row items-start relative pb-6 last:pb-0">
                  {idx !== steps.length - 1 && (
-                    <div className={cn("absolute top-8 bottom-0 left-[15px] w-0.5", step.active ? "bg-orange-600" : "bg-gray-200")} />
+                    <div className={cn("absolute top-8 bottom-0 left-[15px] w-0.5", step.active ? "bg-gradient-to-r from-red-600 to-orange-500" : "bg-gray-200")} />
                  )}
                  <div className="z-10 flex-shrink-0">
-                    <div className={cn("w-8 h-8 rounded-full flex items-center justify-center border-4 border-white shadow-sm transition-colors", step.current ? "bg-orange-600" : (step.active ? "bg-orange-600" : "bg-gray-200"))}>
+                    <div className={cn("w-8 h-8 rounded-full flex items-center justify-center border-4 border-white shadow-sm transition-colors", step.current ? "bg-gradient-to-r from-red-600 to-orange-500" : (step.active ? "bg-gradient-to-r from-red-600 to-orange-500" : "bg-gray-200"))}>
                        {step.current ? <Bike className="w-4 h-4 text-white" /> : (step.active ? <CheckCircle2 className="w-4 h-4 text-white" /> : null)}
                     </div>
                  </div>
                  <div className="ml-4 flex-1">
-                    <h3 className={cn("font-bold text-lg leading-tight", step.current ? "text-orange-600" : (step.active ? "text-gray-900" : "text-gray-400"))}>{step.title}</h3>
+                    <h3 className={cn("font-bold text-lg leading-tight", step.current ? "text-red-600" : (step.active ? "text-gray-900" : "text-gray-400"))}>{step.title}</h3>
                     <p className="text-gray-500 text-sm font-medium mt-1">{step.time}</p>
                  </div>
               </div>

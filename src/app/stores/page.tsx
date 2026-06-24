@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from 'react';
 import Link from 'next/link';
 import { MainLayout } from '@/components/Layout';
@@ -18,7 +19,7 @@ export default function Stores() {
 
   const item = {
     hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+    show: { opacity: 1, y: 0, transition: { type: "spring" as any, stiffness: 300, damping: 24 } }
   };
 
   return (
@@ -30,7 +31,7 @@ export default function Stores() {
           </div>
           <input
             type="text"
-            className="block w-full rounded-2xl border-0 py-3 pl-10 pr-4 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6 bg-gray-50 font-medium"
+            className="block w-full rounded-2xl border-0 py-3 pl-10 pr-4 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-500 sm:text-sm sm:leading-6 bg-gray-50 font-medium"
             placeholder="Search stores..."
           />
         </div>
@@ -38,7 +39,7 @@ export default function Stores() {
         <div className="flex overflow-x-auto space-x-3 pb-2 -mx-4 px-4 hidden-scrollbar" style={{ scrollbarWidth: 'none' }}>
           <button 
             onClick={() => setActiveCategory('All')}
-            className={`flex-shrink-0 px-4 py-2 rounded-full font-bold text-sm ${activeCategory === 'All' ? 'bg-orange-600 text-white' : 'bg-gray-100 text-gray-700'}`}
+            className={`flex-shrink-0 px-4 py-2 rounded-full font-bold text-sm ${activeCategory === 'All' ? 'bg-gradient-to-r from-red-600 to-orange-500 text-white' : 'bg-gray-100 text-gray-700'}`}
           >
             All
           </button>
@@ -46,7 +47,7 @@ export default function Stores() {
             <button 
               key={cat.id} 
               onClick={() => setActiveCategory(cat.name)}
-              className={`flex-shrink-0 px-4 py-2 rounded-full font-bold text-sm flex items-center space-x-1 ${activeCategory === cat.name ? 'bg-orange-600 text-white' : 'bg-gray-100 text-gray-700'}`}
+              className={`flex-shrink-0 px-4 py-2 rounded-full font-bold text-sm flex items-center space-x-1 ${activeCategory === cat.name ? 'bg-gradient-to-r from-red-600 to-orange-500 text-white' : 'bg-gray-100 text-gray-700'}`}
             >
               <span>{cat.icon}</span>
               <span>{cat.name}</span>

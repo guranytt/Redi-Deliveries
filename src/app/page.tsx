@@ -1,3 +1,4 @@
+"use client";
 import Link from 'next/link';
 import { MainLayout } from '@/components/Layout';
 import { MOCK_BANNERS, MOCK_CATEGORIES, MOCK_VENDORS, MOCK_MENU } from '@/lib/data';
@@ -15,7 +16,7 @@ export default function Home() {
 
   const item = {
     hidden: { opacity: 0, y: 20 },
-    show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 300, damping: 24 } }
+    show: { opacity: 1, y: 0, transition: { type: "spring" as any, stiffness: 300, damping: 24 } }
   };
 
   return (
@@ -26,8 +27,8 @@ export default function Home() {
           <div>
             <p className="text-sm font-medium text-gray-500">Delivering to</p>
             <div className="flex items-center space-x-1">
-              <MapPin className="w-5 h-5 text-orange-600" />
-              <span className="font-bold text-lg">Computer Science South...</span>
+              <MapPin className="w-5 h-5 text-red-500" />
+              <span className="font-extrabold text-lg text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-500">Computer Science South...</span>
             </div>
           </div>
           <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center overflow-hidden">
@@ -42,7 +43,7 @@ export default function Home() {
           </div>
           <input
             type="text"
-            className="block w-full rounded-2xl border-0 py-3.5 pl-10 pr-4 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-orange-600 sm:text-sm sm:leading-6 bg-gray-50 font-medium"
+            className="block w-full rounded-2xl border-0 py-3.5 pl-10 pr-4 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-500 sm:text-sm sm:leading-6 bg-gray-50 font-medium"
             placeholder="Search meals or vendors..."
           />
         </div>
@@ -71,7 +72,7 @@ export default function Home() {
         <div className="flex overflow-x-auto space-x-4 pb-2 -mx-4 px-4" style={{ scrollbarWidth: 'none' }}>
           {MOCK_CATEGORIES.map((cat) => (
              <button key={cat.id} className="flex flex-col items-center space-y-2 flex-shrink-0 group">
-                <div className="w-16 h-16 rounded-2xl bg-white shadow-sm border border-gray-100 flex items-center justify-center text-2xl group-active:scale-95 transition-transform">
+                <div className="w-16 h-16 rounded-2xl bg-white shadow-sm border border-gray-100 flex items-center justify-center text-2xl group-hover:bg-red-50 group-hover:border-red-100 group-hover:shadow-md group-active:scale-95 transition-all">
                   {cat.icon}
                 </div>
                 <span className="text-sm font-bold text-gray-700">{cat.name}</span>
@@ -88,7 +89,7 @@ export default function Home() {
                <h4 className="font-bold text-gray-900">{MOCK_MENU[0].name}</h4>
                <p className="text-sm text-gray-500 font-medium">Campus Grill</p>
              </div>
-             <button className="bg-gray-100 p-3 rounded-2xl font-bold text-orange-600 hover:bg-gray-200">
+             <button className="bg-gray-100 p-3 rounded-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-500 hover:bg-gray-200">
                Reorder
              </button>
           </div>
@@ -100,9 +101,9 @@ export default function Home() {
           <motion.div variants={container} initial="hidden" animate="show" className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {MOCK_VENDORS.map((vendor) => (
               <motion.div variants={item} key={vendor.id}>
-                <Link href={`/vendor/${vendor.id}`} className="block bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 active:scale-[0.98] transition-transform">
-                <div className="h-48 w-full relative">
-                  <img src={vendor.image} alt={vendor.name} className="w-full h-full object-cover" />
+                <Link href={`/vendor/${vendor.id}`} className="block bg-white rounded-3xl overflow-hidden shadow-sm border border-gray-100 active:scale-[0.98] hover:shadow-lg hover:border-red-200 transition-all group">
+                <div className="h-48 w-full relative overflow-hidden">
+                  <img src={vendor.image} alt={vendor.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
                   <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full flex items-center space-x-1 shadow-sm">
                     <Star className="w-4 h-4 fill-yellow-400 text-yellow-500" />
                     <span className="text-sm font-bold">{vendor.rating}</span>

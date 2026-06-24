@@ -1,6 +1,6 @@
 export const MOCK_BANNERS = [
-  { id: '1', title: 'Free Delivery on first order!', image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&q=80&w=800&h=400', color: 'bg-orange-600' },
-  { id: '2', title: '50% off Campus Grill', image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&q=80&w=800&h=400', color: 'bg-orange-500' },
+  { id: '1', title: 'Free Delivery on first order!', image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&q=80&w=800&h=400', color: 'bg-gradient-to-r from-red-600 to-orange-500' },
+  { id: '2', title: '50% off Campus Grill', image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&q=80&w=800&h=400', color: 'bg-gradient-to-r from-red-500 to-orange-400' },
 ];
 
 export const MOCK_CATEGORIES = [

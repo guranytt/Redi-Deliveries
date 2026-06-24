@@ -1,3 +1,4 @@
+"use client";
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { MainLayout } from '@/components/Layout';
@@ -6,7 +7,7 @@ import { ArrowLeft, Minus, Plus } from 'lucide-react';
 import { useState } from 'react';
 
 export default function Product() {
-  const { id } = useParams();
+  const params = useParams(); const id = params?.id as string;
   const product = MOCK_MENU.find(m => m.id === (id || 'm1')) || MOCK_MENU[0];
   const [quantity, setQuantity] = useState(1);
 
@@ -35,9 +36,9 @@ export default function Product() {
                  <span className="bg-gray-100 text-gray-600 text-xs font-bold px-2 py-1 rounded-md">Required</span>
                </div>
                
-               <label className="flex items-center justify-between p-4 border border-orange-600 bg-orange-50 rounded-2xl mb-3 cursor-pointer">
+               <label className="flex items-center justify-between p-4 border border-red-500 bg-red-50 rounded-2xl mb-3 cursor-pointer">
                   <div className="flex items-center space-x-3">
-                     <div className="w-5 h-5 rounded-full border-4 border-orange-600 bg-white"></div>
+                     <div className="w-5 h-5 rounded-full border-4 border-red-500 bg-white"></div>
                      <span className="font-bold text-gray-900">Regular</span>
                   </div>
                   <span className="text-sm font-bold text-gray-500">Free</span>
@@ -63,7 +64,7 @@ export default function Product() {
                <button onClick={() => setQuantity(quantity + 1)} className="text-gray-900 p-1 active:scale-90"><Plus className="w-5 h-5" /></button>
             </div>
             
-            <Link href="/cart" className="flex-1 bg-orange-600 text-white rounded-full py-4 text-center font-extrabold text-lg shadow-lg active:scale-[0.98] transition-transform">
+            <Link href="/cart" className="flex-1 bg-gradient-to-r from-red-600 to-orange-500 text-white rounded-full py-4 text-center font-extrabold text-lg shadow-lg active:scale-[0.98] transition-transform">
                Add ${(product.price * quantity).toFixed(2)}
             </Link>
          </div>

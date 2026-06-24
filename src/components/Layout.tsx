@@ -1,5 +1,7 @@
+"use client";
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Home, Search, Receipt, Wallet, User, Store } from 'lucide-react';
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -13,7 +15,7 @@ export function Header({ title, backTo, action }: { title?: string, backTo?: str
   return (
     <header className="sticky top-0 z-40 bg-white shadow-sm px-4 h-16 flex items-center justify-between">
       {backTo ? (
-        <Link to={backTo} className="p-2 -ml-2 rounded-full active:bg-gray-100">
+        <Link href={backTo} className="p-2 -ml-2 rounded-full active:bg-gray-100">
           <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
@@ -30,7 +32,7 @@ export function Header({ title, backTo, action }: { title?: string, backTo?: str
 }
 
 export function BottomNav() {
-  const location = useLocation();
+  const pathname = usePathname();
   const tabs = [
     { name: 'Home', path: '/', icon: Home },
     { name: 'Stores', path: '/stores', icon: Store },
@@ -44,13 +46,13 @@ export function BottomNav() {
       <div className="flex justify-around items-center h-16">
         {tabs.map((tab) => {
           const Icon = tab.icon;
-          const isActive = location.pathname === tab.path || location.pathname.startsWith(tab.path + '/');
+          const isActive = pathname === tab.path || pathname?.startsWith(tab.path + '/');
           // Exceptions for home
-          const isHomeActive = location.pathname === '/';
+          const isHomeActive = pathname === '/';
           const active = tab.path === '/' ? isHomeActive : isActive;
 
           return (
-            <Link key={tab.name} to={tab.path} className={cn("flex flex-col items-center justify-center w-full h-full space-y-1 text-xs font-semibold", active ? "text-orange-600" : "text-gray-500 hover:text-gray-900")}>
+            <Link key={tab.name} href={tab.path} className={cn("flex flex-col items-center justify-center w-full h-full space-y-1 text-xs font-semibold", active ? "text-red-500" : "text-gray-500 hover:text-gray-900")}>
               <Icon className={cn("w-6 h-6", active && "stroke-2")} />
               <span>{tab.name}</span>
             </Link>
@@ -67,26 +69,26 @@ export function MainLayout({ children, noHeader = false, title, backTo, noBottom
       {/* Desktop Sidebar */}
       <aside className="hidden md:flex flex-col w-64 border-r border-gray-200 bg-white sticky top-0 h-screen">
         <div className="p-6">
-          <h1 className="text-3xl font-extrabold text-orange-600 tracking-tighter">REDI</h1>
+          <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-orange-500 tracking-tighter">REDI</h1>
           <p className="text-sm text-gray-500 font-medium">Campus Delivery</p>
         </div>
         <nav className="flex-1 px-4 space-y-2 mt-4">
-          <Link to="/" className="flex flex-row items-center space-x-3 text-gray-700 hover:bg-gray-100 p-3 rounded-xl font-bold">
+          <Link href="/" className="flex flex-row items-center space-x-3 text-gray-700 hover:bg-gray-100 p-3 rounded-xl font-bold">
             <Home className="w-5 h-5" /> <span>Home</span>
           </Link>
-          <Link to="/stores" className="flex flex-row items-center space-x-3 text-gray-700 hover:bg-gray-100 p-3 rounded-xl font-bold">
+          <Link href="/stores" className="flex flex-row items-center space-x-3 text-gray-700 hover:bg-gray-100 p-3 rounded-xl font-bold">
             <Store className="w-5 h-5" /> <span>Stores</span>
           </Link>
-          <Link to="/orders" className="flex flex-row items-center space-x-3 text-gray-700 hover:bg-gray-100 p-3 rounded-xl font-bold">
+          <Link href="/orders" className="flex flex-row items-center space-x-3 text-gray-700 hover:bg-gray-100 p-3 rounded-xl font-bold">
             <Receipt className="w-5 h-5" /> <span>Orders</span>
           </Link>
-          <Link to="/wallet" className="flex flex-row items-center space-x-3 text-gray-700 hover:bg-gray-100 p-3 rounded-xl font-bold">
+          <Link href="/wallet" className="flex flex-row items-center space-x-3 text-gray-700 hover:bg-gray-100 p-3 rounded-xl font-bold">
             <Wallet className="w-5 h-5" /> <span>Wallet</span>
           </Link>
-          <Link to="/auth" className="flex flex-row items-center space-x-3 text-gray-700 hover:bg-gray-100 p-3 rounded-xl font-bold">
+          <Link href="/auth" className="flex flex-row items-center space-x-3 text-gray-700 hover:bg-gray-100 p-3 rounded-xl font-bold">
             <User className="w-5 h-5" /> <span>Profile</span>
           </Link>
-          <Link to="/admin" className="flex flex-row items-center space-x-3 text-orange-600 hover:bg-orange-50 p-3 rounded-xl font-bold mt-8 border border-orange-100">
+          <Link href="/admin" className="flex flex-row items-center space-x-3 text-red-600 hover:bg-red-50 p-3 rounded-xl font-bold mt-8 border border-red-100">
              <span>Admin Dashboard</span>
           </Link>
         </nav>

@@ -1,3 +1,4 @@
+"use client";
 import Link from 'next/link';
 import { MainLayout } from '@/components/Layout';
 import { MOCK_MENU } from '@/lib/data';
@@ -30,7 +31,7 @@ export default function Cart() {
                <div className="flex-1 flex flex-col justify-between py-1">
                   <div>
                     <h3 className="font-extrabold text-gray-900 leading-tight">{item.product.name}</h3>
-                    <p className="text-sm font-bold text-orange-600 mt-1">${item.product.price.toFixed(2)}</p>
+                    <p className="text-sm font-bold text-red-600 mt-1">${item.product.price.toFixed(2)}</p>
                   </div>
                   
                   <div className="flex items-center justify-between mt-2">
@@ -47,7 +48,7 @@ export default function Cart() {
 
         {/* Promo Code */}
         <div className="flex space-x-2">
-           <input type="text" placeholder="Promo code" className="flex-1 bg-white border border-gray-200 rounded-2xl px-4 font-bold text-sm focus:ring-2 focus:ring-orange-600 focus:border-orange-600 outline-none" />
+           <input type="text" placeholder="Promo code" className="flex-1 bg-white border border-gray-200 rounded-2xl px-4 font-bold text-sm focus:ring-2 focus:ring-red-500 focus:border-red-500 outline-none" />
            <button className="bg-gray-900 text-white px-6 py-3 rounded-2xl font-extrabold hover:bg-gray-800 transition-colors">Apply</button>
         </div>
 
@@ -71,7 +72,7 @@ export default function Cart() {
 
       {/* Checkout Button */}
       <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-100 z-40 pb-safe md:relative md:border-none md:bg-transparent shadow-[0_-4px_20px_rgba(0,0,0,0.05)] md:shadow-none">
-         <Link href="/checkout" className="w-full bg-orange-600 text-white rounded-full py-4 px-6 flex items-center justify-between font-extrabold text-lg shadow-lg shadow-orange-600/30 active:scale-[0.98] transition-transform">
+         <Link href="/checkout" className="w-full bg-gradient-to-r from-red-600 to-orange-500 text-white rounded-full py-4 px-6 flex items-center justify-between font-extrabold text-lg shadow-lg shadow-red-500/30 active:scale-[0.98] transition-transform">
             <span>Checkout</span>
             <div className="flex items-center space-x-2">
                <span>${total.toFixed(2)}</span>

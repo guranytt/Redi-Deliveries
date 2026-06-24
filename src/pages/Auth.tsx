@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 
 export default function Auth() {
@@ -7,7 +7,7 @@ export default function Auth() {
   const [otp, setOtp] = useState('');
   const [step, setStep] = useState<'phone' | 'otp'>('phone');
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleSendOtp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -43,7 +43,7 @@ export default function Auth() {
     if (!import.meta.env.VITE_SUPABASE_URL || import.meta.env.VITE_SUPABASE_URL === 'YOUR_SUPABASE_URL' || import.meta.env.VITE_SUPABASE_URL === 'https://placeholder.supabase.co') {
       console.warn("Supabase not configured. Mocking auth success.");
       setTimeout(() => {
-        navigate('/');
+        router.push('/');
         setLoading(false);
       }, 1000);
       return;
@@ -56,7 +56,7 @@ export default function Auth() {
         type: 'sms',
       });
       if (error) throw error;
-      navigate('/');
+      router.push('/');
     } catch (error: any) {
       alert(error.message);
     } finally {

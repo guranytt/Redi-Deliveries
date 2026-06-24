@@ -1,3 +1,4 @@
+"use client";
 import { MainLayout } from '@/components/Layout';
 import { MOCK_ORDERS } from '@/lib/data';
 import { ChevronRight } from 'lucide-react';
@@ -18,7 +19,7 @@ export default function Orders() {
               </div>
               
               <div className="flex items-center space-x-2 mb-4">
-                 <span className={`text-xs font-bold px-3 py-1 rounded-md ${order.status === 'Delivered' ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}`}>
+                 <span className={`text-xs font-bold px-3 py-1 rounded-md ${order.status === 'Delivered' ? 'bg-green-100 text-green-700' : 'bg-red-50 text-red-700'}`}>
                     {order.status}
                  </span>
                  <span className="text-sm font-medium text-gray-500">
