@@ -1,4 +1,4 @@
-import { Auth0Provider } from '@auth0/nextjs-auth0/client';
+import { ClerkProvider } from '@clerk/nextjs';
 import '@/index.css';
 
 export const metadata = {
@@ -8,12 +8,12 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body>
-        <Auth0Provider>
+    <ClerkProvider>
+      <html lang="en">
+        <body>
           {children}
-        </Auth0Provider>
-      </body>
-    </html>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

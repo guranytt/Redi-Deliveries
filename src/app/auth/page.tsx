@@ -1,13 +1,13 @@
 "use client";
 import React, { useEffect, useState } from 'react';
-import { useUser } from '@auth0/nextjs-auth0/client';
+import { useUser, SignInButton, SignOutButton } from '@clerk/nextjs';
 import { supabase } from '@/lib/supabase';
 import { MainLayout } from '@/components/Layout';
 import { CldUploadWidget } from 'next-cloudinary';
 import { LogOut, User as UserIcon, Camera } from 'lucide-react';
 
 export default function Profile() {
-  const { user, error, isLoading } = useUser();
+  const { user, isLoaded } = useUser();
   const [profileData, setProfileData] = useState<any>(null);
 
   useEffect(() => {
@@ -17,7 +17,7 @@ export default function Profile() {
         const { data } = await supabase
           .from('users')
           .select('*')
-          .eq('auth0_id', user.sub)
+          .eq('clerk_id', user.id)
           .single();
         
         if (data) setProfileData(data);
@@ -32,7 +32,7 @@ export default function Profile() {
       // Upsert into Supabase
       const { data } = await supabase
         .from('users')
-        .upsert({ auth0_id: user.sub, email: user.email, name: user.name, avatar_url: imageUrl })
+        .upsert({ clerk_id: user.id, email: user.primaryEmailAddress?.emailAddress, name: user.fullName, avatar_url: imageUrl })
         .select()
         .single();
       
@@ -40,8 +40,7 @@ export default function Profile() {
     }
   };
 
-  if (isLoading) return <MainLayout><div className="p-4 text-center">Loading...</div></MainLayout>;
-  if (error) return <MainLayout><div className="p-4 text-center text-red-600">{error.message}</div></MainLayout>;
+  if (!isLoaded) return <MainLayout><div className="p-4 text-center">Loading...</div></MainLayout>;
 
   return (
     <MainLayout title="Profile">
@@ -49,16 +48,18 @@ export default function Profile() {
         {!user ? (
           <div className="text-center mt-10">
             <h1 className="text-2xl font-extrabold mb-4">Welcome to REDI</h1>
-            <a href="/api/auth/login" className="inline-block bg-gradient-to-r from-red-600 to-orange-500 text-white font-bold py-3 px-6 rounded-full">
-              Login with Auth0
-            </a>
+            <SignInButton mode="modal">
+              <button className="inline-block bg-gradient-to-r from-red-600 to-orange-500 text-white font-bold py-3 px-6 rounded-full">
+                Login with Clerk
+              </button>
+            </SignInButton>
           </div>
         ) : (
           <div className="bg-white rounded-3xl p-6 shadow-sm border border-gray-100 text-center relative mt-10">
             <div className="relative inline-block -mt-16 mb-4">
-              {profileData?.avatar_url || user.picture ? (
+              {profileData?.avatar_url || user.imageUrl ? (
                 <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-md mx-auto">
-                   <img src={profileData?.avatar_url || user.picture} alt="Avatar" className="w-full h-full object-cover" />
+                   <img src={profileData?.avatar_url || user.imageUrl} alt="Avatar" className="w-full h-full object-cover" />
                 </div>
               ) : (
                 <div className="w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center border-4 border-white shadow-md mx-auto">
@@ -75,14 +76,16 @@ export default function Profile() {
               </CldUploadWidget>
             </div>
             
-            <h2 className="text-2xl font-extrabold text-gray-900">{profileData?.name || user.name}</h2>
-            <p className="text-gray-500 font-medium">{user.email}</p>
+            <h2 className="text-2xl font-extrabold text-gray-900">{profileData?.name || user.fullName}</h2>
+            <p className="text-gray-500 font-medium">{user.primaryEmailAddress?.emailAddress}</p>
             
             <div className="mt-8">
-              <a href="/api/auth/logout" className="flex items-center justify-center space-x-2 w-full bg-gray-50 text-gray-700 font-bold py-3 px-6 rounded-full hover:bg-gray-100 transition">
-                <LogOut className="w-5 h-5" />
-                <span>Logout</span>
-              </a>
+              <SignOutButton>
+                <button className="flex items-center justify-center space-x-2 w-full bg-gray-50 text-gray-700 font-bold py-3 px-6 rounded-full hover:bg-gray-100 transition">
+                  <LogOut className="w-5 h-5" />
+                  <span>Logout</span>
+                </button>
+              </SignOutButton>
             </div>
           </div>
         )}
